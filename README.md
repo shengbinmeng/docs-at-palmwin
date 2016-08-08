@@ -1,0 +1,1 @@
+I use [Markdown Reader](https://chrome.google.com/webstore/detail/markdown-reader/gpoigdifkoadgajcincpilkjmejcaanc) extension of Chrome to view Markdown (.md) files.
