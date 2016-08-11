@@ -16,17 +16,19 @@
 
 # 统计信息
 
-统计信息stat_info每固定时间间隔（目前对于服务器上的虚拟客户端，有T＝200ms）汇报一次。其中的数据包括：
+统计信息stat_info每固定时间间隔（T＝200ms）汇报一次。其中的数据包括：
 
-- 这T时间内所有发送的数据包信息（sendpacketinfo_list）; // 该list长度限为了201
-- 这T时间内所有接收的数据包信息（recpacketinfo_list）; // 该list长度限为了201
-- 这T时间内及过去N个T时间内发送数据包情况的总结信息（sendsummaryinfo_list）; // 该list长度限为了6（即N为5）
-- 这T时间内及过去N个T时间内接收数据包情况的总结信息（recsummaryinfo_list)。// 该list长度限为了6
-
-（目前的实现代码看上去sendpacketinfo_list只是保存最近发送的201个数据包并向前滑动，并没有按时间T来分割；recpacketinfo_list同如此。）
+- 这T时间内所有发送的数据包信息（sendpacketinfo_list）; // 该list长度限为了200
+- 这T时间内所有接收的数据包信息（recpacketinfo_list）; // 该list长度限为了200
+- 这T时间内及过去N个T时间内发送数据包情况的总结信息（sendsummaryinfo_list）; // 该list长度限为了5（即N为5）
+- 这T时间内及过去N个T时间内接收数据包情况的总结信息（recsummaryinfo_list)。// 该list长度限为了5
 
 每个数据包信息包括：包号、包大小、包的发送时间和接收时间；
 每个T时间内的总结信息包括：这段时间内所有包的最大包号、最小包号、总大小、总数量、总传输时间（每个包的传输时间为接收时间与发送时间之差）。
+
+stat_info中还包括：当前实际发送的码率（sendBitrate）、网络类型（net_type，是Wi-Fi还是3G等）、p2p和relay两种传输方式的RTT，等等。
+
+这里只考虑视频，也就是仅统计了视频的数据。
 
 # 统计信息的收集和使用
 
