@@ -28,6 +28,8 @@
 
 计算码率差值：bitrate_diff = bitrate_receivng - bitrate_sending。
 
+（此处码率差值的计算可选为计算当前这1s内的bitrate_receivng与上一秒内的bitrate_receivng的差值；在动态情况下都能达到适应带宽的目的，但稳态有差别）。
+
 将上述获得的码率值保存在一个列表中，称为“码率列表”。这个列表的最终长度为50，每个列表项对应1s内的码率，所以该列表保存了过去50s内的码率信息。
 
 （其实码率差值可以随时计算得到，并没必要保存。）
@@ -40,7 +42,7 @@
 将码率列表中所有码率差值的累加和，作为E_i。
 用码率列表中的最后一个码率差值减去倒数第二个码率差值，作为E_d。
 
-计算increase = K_p * E_p + K_i * E_i + K_d * E_d，其中K_p、K_i、K_d是可调系数。目前我们取K_p = 1，K_i = 0，K_d = 0，这样相当于只用了E_p部分。
+计算increase = K_p * E_p + K_i * E_i + K_d * E_d，其中K_p、K_i、K_d是可调系数。目前我们简单地取K_p = 0.9，K_i = 0.1，K_d = 0。
 
 将估计的带宽定为：上次决定的带宽（last_decided_bandwidth）加上increase。
 
