@@ -1,6 +1,6 @@
 网络控制算法的测试环境
 
-# 模拟评测环境
+# 模拟测试环境
 
 ## 客户端测试机器人
 
@@ -17,4 +17,33 @@
 
 # 实际测试环境
 
-TODO
+## 自行调试
+
+可以用[cg_voip](https://git.v5.cn/voip/cg_voip)仓库中的voip_sample样例程序。在其中声明以下外部变量
+
+```
+extern char test_udp_server[19];
+extern int test_udp_port;
+```
+并赋值为想要连接的udpServer（算法运行的机器）的地址和端口。例如：
+
+```
+strcpy(test_udp_server, "10.9.241.136");
+test_udp_port = 7012;
+```
+
+这些变量在网络库中定义。如果它们被赋了值，网络库将会用它们作为udpServer。
+
+voip_sample中已有预先添加的用户，这些用户可以登录并呼叫彼此。
+
+## 测试人员测试
+
+修改后的udpServer由洛哥部署到测试环境服务器，然后由冬哥负责用实际客户端进行测试。
+
+测试环境服务器有多台，客户端将选择性地连接其中一台。通过查看客户端log可以找到连接的哪一台服务器：在log中搜索“call_summary”，该日志信息中显示了最终连接的udpServer（部署运行的端口为700x形式）。
+
+找到所连接的服务器后，登录该服务器，并在`/opt/server/udpServer7007/`目录下查看服务器log。
+
+## 数据可视化
+
+TODO（据说磊哥也做的有）
