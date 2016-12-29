@@ -2,7 +2,7 @@
 
 目前udpServer中已有了6个网络控制算法。它们可以互相替换，在udp_server.conf中以编号0～5来指定。
 
-其命名依次为：default、bandwidth、delay_var、discrete、multieval、smooth。
+0～5的命名依次为：default、delay_var、bandwidth、multieval、discrete、smooth。
 
 # 各算法简介
 
